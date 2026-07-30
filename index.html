@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DocGP | 전주 특화 증상 기반 1차 진료과 추천 서비스</title>
+    <!-- Google Fonts: Inter & Noto Sans KR -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Background Decor -->
+    <div class="bg-gradient-glow"></div>
+
+    <div class="app-container">
+        <!-- Header Nav -->
+        <header class="navbar">
+            <div class="brand">
+                <div class="brand-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V13H7V11H11V7H13V11H17V13H13V17Z" fill="url(#brand-grad)"/>
+                        <defs>
+                            <linearGradient id="brand-grad" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#00D2FF"/>
+                                <stop offset="1" stop-color="#0072FF"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+                <div class="brand-text">
+                    <span class="brand-name">DocGP</span>
+                    <span class="brand-tag">전주 특화 퀵 가이드</span>
+                </div>
+            </div>
+            <div class="location-badge">
+                <span class="dot"></span> 전라북도 전주시 특화
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+
+            <!-- STEP 1: Body Part & Key Symptom Selection -->
+            <section id="step-1" class="step-card active">
+                <div class="step-header">
+                    <span class="step-badge">Step 1 of 3</span>
+                    <h2>어느 부위가 불편하신가요?</h2>
+                    <p class="step-sub">3초 만에 알맞은 1차 방문 진료과를 추천해 드립니다.</p>
+                </div>
+
+                <div class="body-parts-grid">
+                    <button class="body-btn" data-part="head">
+                        <div class="icon-box">🧠</div>
+                        <span>머리 / 얼굴</span>
+                    </button>
+                    <button class="body-btn" data-part="chest">
+                        <div class="icon-box">🫁</div>
+                        <span>목 / 흉부 / 등</span>
+                    </button>
+                    <button class="body-btn" data-part="abdomen">
+                        <div class="icon-box">🫄</div>
+                        <span>복부 / 허리</span>
+                    </button>
+                    <button class="body-btn" data-part="limbs">
+                        <div class="icon-box">🦴</div>
+                        <span>팔 / 다리 / 관절</span>
+                    </button>
+                    <button class="body-btn" data-part="skin">
+                        <div class="icon-box">🩺</div>
+                        <span>피부 / 전신 / 기타</span>
+                    </button>
+                </div>
+
+                <!-- Upstage Solar Chat Modal Trigger Banner -->
+                <div class="ai-assistant-banner" id="open-ai-modal">
+                    <div class="ai-banner-content">
+                        <span class="sparkle-icon">✨</span>
+                        <div>
+                            <strong>Upstage Solar AI 대화형 상담</strong>
+                            <p>복잡하고 애매한 증상을 말로 자유롭게 설명하고 싶으신가요?</p>
+                        </div>
+                    </div>
+                    <span class="arrow-btn">시작 ➔</span>
+                </div>
+            </section>
+
+            <!-- STEP 2: Detailed Questions (Dynamic Rule-Based) -->
+            <section id="step-2" class="step-card">
+                <div class="step-header">
+                    <button class="back-btn" id="back-to-step-1">← 이전</button>
+                    <span class="step-badge">Step 2 of 3</span>
+                    <h2 id="q-title">세부 증상을 선택해 주세요</h2>
+                    <p class="step-sub" id="q-sub">해당하는 구체적 증상을 선택하면 더욱 정확해집니다.</p>
+                </div>
+
+                <div class="symptom-options" id="symptom-options-container">
+                    <!-- Dynamic rendering via JS -->
+                </div>
+            </section>
+
+            <!-- STEP 3: Sub-question (Duration & Intensity) -->
+            <section id="step-3" class="step-card">
+                <div class="step-header">
+                    <button class="back-btn" id="back-to-step-2">← 이전</button>
+                    <span class="step-badge">Step 3 of 3</span>
+                    <h2>증상 특징 확인</h2>
+                    <p class="step-sub">증상의 지속 시간 및 양상을 확인합니다.</p>
+                </div>
+
+                <div class="sub-q-container">
+                    <div class="q-group">
+                        <label>통증/증상이 언제부터 시작되었나요?</label>
+                        <div class="chip-group" id="duration-chips">
+                            <button class="chip" data-val="acute">오늘 갑자기 (24시간 이내)</button>
+                            <button class="chip" data-val="subacute">며칠 전부터 (1주일 이내)</button>
+                            <button class="chip active" data-val="chronic">오래됨 (1개월 이상 만성)</button>
+                        </div>
+                    </div>
+
+                    <div class="q-group">
+                        <label>동반되는 심각한 증상이 있나요? (중복 선택)</label>
+                        <div class="chip-group multi" id="redflag-chips">
+                            <button class="chip" data-val="fever">고열 (38℃ 이상)</button>
+                            <button class="chip" data-val="numb">감각 마비 / 신경 통증</button>
+                            <button class="chip" data-val="dizzy">극심한 어지럼증</button>
+                            <button class="chip" data-val="none">해당 없음</button>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="submit-btn" id="get-result-btn">
+                    <span>최적 진료과 추천 결과 보기</span>
+                    <span class="sparkle">🚀</span>
+                </button>
+            </section>
+
+            <!-- RESULT SECTION -->
+            <section id="result-section" class="step-card">
+                <div class="result-header">
+                    <div class="speed-badge">⚡ 3초 분석 완료</div>
+                    <h2 class="result-title">추천 1차 방문 진료과</h2>
+                    <div class="dept-card" id="recommended-dept">
+                        <h1 id="dept-name">정형외과</h1>
+                        <span id="dept-type-tag" class="dept-tag">1차 의원 및 2차 병원 권장</span>
+                        <p id="dept-reason" class="dept-desc">허리 및 관절 부위 신계통 통증과 근육통이 의심됩니다.</p>
+                    </div>
+                </div>
+
+                <!-- Notice / Legal Disclaimer -->
+                <div class="legal-notice">
+                    <span class="icon">ℹ️</span>
+                    <p>본 서비스는 질병 진단이 아닌 1차 방문 진료과 네비게이션 가이드입니다. 응급 상황 시 즉시 119 또는 응급실을 방문하세요.</p>
+                </div>
+
+                <!-- Jeonju Local Recommended Hospitals -->
+                <div class="local-hospitals-section">
+                    <div class="section-title-wrap">
+                        <h3>🏥 전주 지역 추천 병원 네트워크</h3>
+                        <span class="sub-text">위치 및 진료 시간 정보</span>
+                    </div>
+
+                    <div class="hospital-list" id="hospital-list">
+                        <!-- Dynamic Hosp Cards -->
+                    </div>
+                </div>
+
+                <!-- Sponsored Partner Banner (Revenue Model) -->
+                <div class="ad-partner-banner">
+                    <span class="ad-tag">제휴 로컬 병원</span>
+                    <div class="ad-content">
+                        <strong id="ad-hosp-name">전주 신시가지 굿모닝 의원</strong>
+                        <p id="ad-hosp-desc">야간 진료 가능 • 전문 진료 및 도수치료 센터 운영</p>
+                    </div>
+                    <button class="ad-call-btn">전화 문의</button>
+                </div>
+
+                <button class="restart-btn" id="restart-btn">🔄 다시 진단하기</button>
+            </section>
+
+        </main>
+
+        <!-- Upstage Solar AI Modal Dialog -->
+        <div class="modal-overlay" id="ai-modal">
+            <div class="modal-card">
+                <div class="modal-header">
+                    <div class="modal-title">
+                        <span class="ai-badge">Upstage Solar LLM</span>
+                        <h3>DocGP AI 증상 대화 상담</h3>
+                    </div>
+                    <button class="close-modal" id="close-ai-modal">&times;</button>
+                </div>
+                
+                <div class="api-key-config">
+                    <input type="password" id="upstage-key-input" placeholder="Upstage API Key 입력 (선택: up_...)" />
+                    <span class="key-hint">미입력 시 데모 모드로 작동합니다.</span>
+                </div>
+
+                <div class="chat-box" id="chat-box">
+                    <div class="chat-msg bot">
+                        안녕하세요! DocGP AI 상담실입니다. 현재 어떤 신체 증상으로 불편하신가요? 구체적으로 말씀해 주시면 적절한 진료과를 추천해 드릴게요.
+                    </div>
+                </div>
+
+                <div class="chat-input-area">
+                    <input type="text" id="chat-input" placeholder="예: 3일 전부터 오른쪽 뒷머리가 찌릿하게 아파요" />
+                    <button id="send-chat-btn">전송</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>© 2026 DocGP. 전주 특화 증상 기반 진료과 추천 서비스 프로토타입</p>
+            <p class="small">경증 환자의 효율적 1·2차 병원 유도 및 골든타임 보존 프로젝트</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
